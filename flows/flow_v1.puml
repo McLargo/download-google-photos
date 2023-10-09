@@ -1,0 +1,14 @@
+@startuml
+while (show list of all albums)
+  if (pick album) then (yes)
+   :get all pictures;
+   :download all pictures;
+   :remove pictures (optional);
+   :remove album (optional);
+  else (exit)
+    stop
+  endif
+endwhile
+-[hidden]->
+detach
+@enduml
