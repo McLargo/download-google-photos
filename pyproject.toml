@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "download-google-photos"
+version = "0.1.0"
+description = "Python library to download your personal albums from google photos"
+authors = ["Javier Gil <javiergilmont@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+authlib-httpx = "^0.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
