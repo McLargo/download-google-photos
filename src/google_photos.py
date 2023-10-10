@@ -3,7 +3,7 @@ from googleapiclient.errors import HttpError
 from httplib2 import Http
 from oauth2client import client, file, tools
 
-from src.models import Album, Albums
+from src.models import GoogleAlbum, GoogleAlbums
 
 
 class GooglePhotos:
@@ -37,11 +37,10 @@ class GooglePhotos:
                 static_discovery=False,
             )
         except HttpError as err:
-            # TODO: handle properly
-            print(err)
+            raise err
 
     # TODO: response must be a model
-    def get_albums(self) -> list[Album]:
+    def get_albums(self) -> list[GoogleAlbum]:
         albums = (
             self._photos_library.albums()
             .list(
@@ -49,7 +48,7 @@ class GooglePhotos:
             )
             .execute()
         )
-        albums_model: Albums = Albums(**albums)
+        albums_model: GoogleAlbums = GoogleAlbums(**albums)
         return albums_model.albums
 
     # TODO: implement method
