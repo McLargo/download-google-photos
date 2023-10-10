@@ -3,6 +3,8 @@ from googleapiclient.errors import HttpError
 from httplib2 import Http
 from oauth2client import client, file, tools
 
+from src.models import Album, Albums
+
 
 class GooglePhotos:
     SCOPES = [
@@ -39,14 +41,16 @@ class GooglePhotos:
             print(err)
 
     # TODO: response must be a model
-    def get_albums(self) -> dict:
-        return (
+    def get_albums(self) -> list[Album]:
+        albums = (
             self._photos_library.albums()
             .list(
                 pageSize=self.albums_page_size,
             )
             .execute()
         )
+        albums_model: Albums = Albums(**albums)
+        return albums_model.albums
 
     # TODO: implement method
     #     def get_items_from_album()
