@@ -20,10 +20,7 @@ class GoogleAlbums(BaseModel):
 class GoogleMediaItem(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
-    # TODO: review which ones are mandatory
-    media_item_id: str = Field(alias="id")
     product_url: str = Field(alias="productUrl")
-    base_url: str = Field(alias="baseUrl")
     filename: str
 
 

@@ -1,3 +1,4 @@
+import pytest
 from faker import Faker
 
 from src.factory import (
@@ -16,6 +17,8 @@ from src.models import (
     GoogleMediaItem,
     GoogleMediaItems,
 )
+
+pytestmark = pytest.mark.unit
 
 
 def test_is_album() -> None:
@@ -36,9 +39,7 @@ def test_is_albums() -> None:
 def test_is_media_item() -> None:
     media_item_instance = GoogleMediaItemFactory.build()
     assert isinstance(media_item_instance, GoogleMediaItem)
-    assert isinstance(media_item_instance.media_item_id, str)
     assert isinstance(media_item_instance.product_url, str)
-    assert isinstance(media_item_instance.base_url, str)
     assert isinstance(media_item_instance.filename, str)
 
 

@@ -1,9 +1,13 @@
+import pytest
+
 from src.models import (
     GoogleAlbum,
     GoogleAlbums,
     GoogleMediaItem,
     GoogleMediaItems,
 )
+
+pytestmark = pytest.mark.unit
 
 
 def test_google_album_model() -> None:
@@ -46,13 +50,9 @@ def test_google_albums_model_by_alias() -> None:
 
 def test_google_media_item_model() -> None:
     media_item = GoogleMediaItem(
-        media_item_id="media_item_id",
-        base_url="media_item_base_url",
         product_url="media_item_product_url",
         filename="media_item_filename",
     )
-    assert media_item.media_item_id == "media_item_id"
-    assert media_item.base_url == "media_item_base_url"
     assert media_item.product_url == "media_item_product_url"
     assert media_item.filename == "media_item_filename"
 
@@ -64,16 +64,12 @@ def test_google_media_item_model_by_alias() -> None:
         productUrl="media_item_productUrl",
         filename="media_item_filename",
     )
-    assert media_item.media_item_id == "media_item_id"
-    assert media_item.base_url == "media_item_baseUrl"
     assert media_item.product_url == "media_item_productUrl"
     assert media_item.filename == "media_item_filename"
 
 
 def test_google_media_items_model():
     media_item = GoogleMediaItem(
-        media_item_id="media_item_id",
-        base_url="media_item_base_url",
         product_url="media_item_product_url",
         filename="media_item_filename",
     )

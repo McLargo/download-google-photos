@@ -1,3 +1,5 @@
+import pytest
+
 from src.mocks import (
     MockExecuteAlbums,
     MockExecuteMediaItems,
@@ -6,6 +8,8 @@ from src.mocks import (
     MockSearchMediaItems,
 )
 from src.models import GoogleAlbums, GoogleMediaItems
+
+pytestmark = pytest.mark.unit
 
 
 def test_mock_execute_albums() -> None:

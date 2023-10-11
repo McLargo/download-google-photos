@@ -56,6 +56,9 @@ See below the flow proposed for this project:
 
 ![flows](./flows/flow_v1.png)
 
+NOTE: Optional steps are not yet implemented, mainly because currently google
+api doesn't provide them.
+
 ## Contribution
 
 Use [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) to
@@ -69,11 +72,18 @@ Project includes a.pre-commit-config.yaml to run automatic tools to review code.
 
 Unit testing and functional testing are available.
 
-- `pytest` -> run all tests.
-- `pytest unit` -> run unit tests.
-- `pytest functional` -> run functional tests.
+- `poetry run pytest` -> run all tests.
+- `poetry run pytest -m unit` -> run unit tests.
+- `poetry run pytest -m functional` -> run functional tests.
 
 ## Security
 
-Secrets and token are stored in the .env file. This file is not included in the
+Secrets and variables are stored in `src/config.py` file. This file is not
+included in the repository.
+
+- DEFAULT_DOWNLOAD_PATH: str, path to download images
+- MOCK_PHOTOS_LIBRARY: bool, True to mock google photos library, False to use
+  google photos library.
+
+Oauth file tokens are in oauth folder. This folder is not included in the
 repository.

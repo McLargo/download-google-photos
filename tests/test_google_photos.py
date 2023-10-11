@@ -7,6 +7,8 @@ from src.factory import get_google_albums
 from src.google_photos import GooglePhotos
 from src.models import GoogleAlbum, GoogleMediaItem
 
+pytestmark = pytest.mark.unit
+
 
 def test_get_albums() -> None:
     google_photos: GooglePhotos = GooglePhotos(mock_photos_library=True)

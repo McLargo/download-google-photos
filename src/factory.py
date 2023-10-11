@@ -40,10 +40,6 @@ class GoogleMediaItemFactory(EsESFaker, ModelFactory[GoogleMediaItem]):
     def product_url(cls) -> str:
         return cls.__faker__.image_url()
 
-    @classmethod
-    def base_url(cls) -> str:
-        return cls.__faker__.image_url()
-
 
 class GoogleMediaItemsFactory(ModelFactory[GoogleMediaItems]):
     __model__ = GoogleMediaItems
