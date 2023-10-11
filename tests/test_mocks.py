@@ -16,7 +16,6 @@ def test_mock_execute_albums() -> None:
     assert isinstance(google_albums, GoogleAlbums)
 
 
-# TODO: review if more arguments are needed
 def test_mock_list_album() -> None:
     albums: MockExecuteAlbums = MockListAlbums().list()
     assert isinstance(albums, MockExecuteAlbums)

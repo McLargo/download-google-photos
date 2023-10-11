@@ -27,7 +27,7 @@ class GooglePhotos:
         else:
             self._discover_photos_library()
 
-    def _discover_photos_library(self):
+    def _get_credentials(self):
         store = file.Storage("oauth/token.json")
         credentials = store.get()
         if not credentials or credentials.invalid:
@@ -37,7 +37,10 @@ class GooglePhotos:
                 redirect_uri="http://localhost:8080",
             )
             credentials = tools.run_flow(flow, store)
+        return credentials
 
+    def _discover_photos_library(self):
+        credentials = self._get_credentials()
         try:
             self._photos_library = build(
                 "photoslibrary",

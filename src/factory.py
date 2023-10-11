@@ -16,7 +16,6 @@ DEFAULT_MEDIA_ITEMS_SIZE = 10
 
 
 class EsESFaker:
-    # TODO: add a way to select locale
     __faker__ = Faker(locale=DEFAULT_LOCALE)
 
 

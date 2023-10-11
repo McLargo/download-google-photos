@@ -8,8 +8,6 @@ class MockExecuteAlbums:
 
 class MockListAlbums:
     def list(*args, **kwargs) -> MockExecuteAlbums:
-        # TODO: review how to pass next_page_token,
-        # to have at least 1 unit test case with next_page_token and without it
         return MockExecuteAlbums()
 
 
