@@ -3,28 +3,22 @@ from unittest.mock import Mock, patch
 import pytest
 from googleapiclient.errors import HttpError
 
-from src.factory import albums_factory, media_items_factory
 from src.google_photos import GooglePhotos
 from src.models import GoogleAlbum, GoogleMediaItem
 
 
-@patch("src.google_photos.build")
-def test_get_albums(mock_build) -> None:
-    mock_build.return_value.albums.return_value.list.return_value.execute.return_value = (  # noqa: E501
-        albums_factory.model_dump()
-    )
-    google_photos: GooglePhotos = GooglePhotos()
+def test_get_albums() -> None:
+    google_photos: GooglePhotos = GooglePhotos(mock_photos_library=True)
     albums: list[GoogleAlbum] = google_photos.get_albums()
     assert isinstance(albums, list)
     assert isinstance(albums[0], GoogleAlbum)
 
 
-@patch("src.google_photos.build")
-def test_get_media_items_by_album_id(mock_build) -> None:
-    mock_build.return_value.mediaItems.return_value.search.return_value.execute.return_value = (  # noqa: E501
-        media_items_factory.model_dump()
-    )
-    google_photos: GooglePhotos = GooglePhotos()
+# TODO: add test_get_albums_with_pagination
+
+
+def test_get_media_items_by_album_id() -> None:
+    google_photos: GooglePhotos = GooglePhotos(mock_photos_library=True)
     media_items: list[
         GoogleMediaItem
     ] = google_photos.get_media_items_by_album_id("album_id")

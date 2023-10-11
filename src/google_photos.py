@@ -3,6 +3,7 @@ from googleapiclient.errors import HttpError
 from httplib2 import Http
 from oauth2client import client, file, tools
 
+from src.mocks import MockGooglePhotosLibrary
 from src.models import (
     GoogleAlbum,
     GoogleAlbums,
@@ -20,8 +21,11 @@ class GooglePhotos:
     page_size_albums = 20
     page_size_media_item_per_album = 100
 
-    def __init__(self) -> None:
-        self._discover_photos_library()
+    def __init__(self, mock_photos_library: bool = False) -> None:
+        if mock_photos_library:
+            self._photos_library = MockGooglePhotosLibrary()
+        else:
+            self._discover_photos_library()
 
     def _discover_photos_library(self):
         store = file.Storage("oauth/token.json")
@@ -45,27 +49,33 @@ class GooglePhotos:
             raise err
 
     def get_albums(self) -> list[GoogleAlbum]:
-        # TODO: implement pagination
-        albums = (
-            self._photos_library.albums()
-            .list(
-                pageSize=self.page_size_albums,
+        albums: list[GoogleAlbum] = []
+        page_token = None
+        while True:
+            google_albums = (
+                self._photos_library.albums()
+                .list(
+                    pageSize=self.page_size_albums,
+                    pageToken=page_token,
+                )
+                .execute()
             )
-            .execute()
-        )
-        albums_model: GoogleAlbums = GoogleAlbums(**albums)
-        return albums_model.albums
+            google_albums_model: GoogleAlbums = GoogleAlbums(**google_albums)
+            albums.extend(google_albums_model.albums)
+            if not google_albums_model.next_page_token:
+                break
+            page_token = google_albums_model.next_page_token
+
+        return albums
 
     def get_media_items_by_album_id(
         self,
         album_id: str,
     ) -> list[GoogleMediaItem]:
-        # TODO: implement pagination
         media_items = (
             self._photos_library.mediaItems()
             .search(
                 body={
-                    "pageSize": self.page_size_media_item_per_album,
                     "albumId": album_id,
                 },
             )

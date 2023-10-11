@@ -1,18 +1,47 @@
-from src.mocks import MockGooglePhotos
-from src.models import GoogleAlbum, GoogleMediaItem
+from src.mocks import (
+    MockExecuteAlbums,
+    MockExecuteMediaItems,
+    MockGooglePhotosLibrary,
+    MockListAlbums,
+    MockSearchMediaItems,
+)
+from src.models import GoogleAlbums, GoogleMediaItems
 
 
-def test_mock_google_photos_get_albums() -> None:
-    mock_google_photos_instance = MockGooglePhotos()
-    albums = mock_google_photos_instance.get_albums()
-    assert isinstance(albums, list)
-    assert isinstance(albums[0], GoogleAlbum)
+def test_mock_execute_albums() -> None:
+    albums: dict = MockExecuteAlbums().execute()
+    assert isinstance(albums, dict)
+
+    google_albums: GoogleAlbums = GoogleAlbums.model_validate(albums)
+    assert isinstance(google_albums, GoogleAlbums)
 
 
-def test_mock_google_photos_get_media_items_by_album_id() -> None:
-    mock_google_photos_instance = MockGooglePhotos()
-    media_items = mock_google_photos_instance.get_media_items_by_album_id(
-        "album_id",
+# TODO: review if more arguments are needed
+def test_mock_list_album() -> None:
+    albums: MockExecuteAlbums = MockListAlbums().list()
+    assert isinstance(albums, MockExecuteAlbums)
+
+
+def test_mock_execute_media_items() -> None:
+    media_items: dict = MockExecuteMediaItems().execute()
+    assert isinstance(media_items, dict)
+
+    google_media_items: GoogleMediaItems = GoogleMediaItems.model_validate(
+        media_items,
     )
-    assert isinstance(media_items, list)
-    assert isinstance(media_items[0], GoogleMediaItem)
+    assert isinstance(google_media_items, GoogleMediaItems)
+
+
+def test_mock_search_media_items() -> None:
+    media_items: MockExecuteMediaItems = MockSearchMediaItems().search()
+    assert isinstance(media_items, MockExecuteMediaItems)
+
+
+def test_mock_google_photos_library_album() -> None:
+    albums: MockListAlbums = MockGooglePhotosLibrary().albums()
+    assert isinstance(albums, MockListAlbums)
+
+
+def test_mock_google_photos_library_media_items() -> None:
+    media_items: MockSearchMediaItems = MockGooglePhotosLibrary().mediaItems()
+    assert isinstance(media_items, MockSearchMediaItems)

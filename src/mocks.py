@@ -1,14 +1,31 @@
-from src.factory import albums_factory, media_items_factory
-from src.models import GoogleAlbum, GoogleMediaItem
+from src.factory import get_google_albums, get_google_media_items
 
 
-# TODO: review if this is ever used in tests. if not, remove
-class MockGooglePhotos:
-    def get_albums(self) -> list[GoogleAlbum]:
-        return albums_factory.albums
+class MockExecuteAlbums:
+    def execute(self) -> dict:
+        return get_google_albums().model_dump()
 
-    def get_media_items_by_album_id(
-        self,
-        album_id: str,
-    ) -> list[GoogleMediaItem]:
-        return media_items_factory.media_items
+
+class MockListAlbums:
+    def list(*args, **kwargs) -> MockExecuteAlbums:
+        # TODO: review how to pass next_page_token,
+        # to have at least 1 unit test case with next_page_token and without it
+        return MockExecuteAlbums()
+
+
+class MockExecuteMediaItems:
+    def execute(self) -> dict:
+        return get_google_media_items().model_dump()
+
+
+class MockSearchMediaItems:
+    def search(*args, **kwargs) -> MockExecuteMediaItems:
+        return MockExecuteMediaItems()
+
+
+class MockGooglePhotosLibrary:
+    def albums(self) -> MockListAlbums:
+        return MockListAlbums()
+
+    def mediaItems(self) -> MockSearchMediaItems:
+        return MockSearchMediaItems()

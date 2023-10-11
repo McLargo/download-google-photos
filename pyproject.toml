@@ -79,6 +79,9 @@ select = [
     "W",
 ]
 
+[tool.ruff.pep8-naming]
+ignore-names = ["mediaItems"]
+
 [tool.ruff.flake8-quotes]
 inline-quotes = "double"
 
