@@ -39,8 +39,9 @@ def test_is_albums() -> None:
 def test_is_media_item() -> None:
     media_item_instance = GoogleMediaItemFactory.build()
     assert isinstance(media_item_instance, GoogleMediaItem)
-    assert isinstance(media_item_instance.product_url, str)
+    assert isinstance(media_item_instance.base_url, str)
     assert isinstance(media_item_instance.filename, str)
+    assert isinstance(media_item_instance.mime_type, str)
 
 
 def test_is_media_items() -> None:

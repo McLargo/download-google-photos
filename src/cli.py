@@ -23,7 +23,7 @@ def cli() -> None:
     for x in range(len(albums)):
         click.echo(f"{x+1}: {albums[x].title}")
 
-    prompt = click.prompt(
+    prompt: int = click.prompt(
         "Enter id of the album to download. 0 to exit: ",
         type=click.INT,
         default=0,
@@ -40,8 +40,9 @@ def cli() -> None:
     prompt -= 1
 
     # create new folder in Desktop
-    path = os.path.join(DEFAULT_DOWNLOAD_PATH, albums[prompt].title)
-    os.mkdir(path)
+    path: str = os.path.join(DEFAULT_DOWNLOAD_PATH, albums[prompt].title)
+    if not os.path.exists(path):
+        os.mkdir(path)
 
     # get media items from album and download to the new folder
     media_items: list[
@@ -55,17 +56,14 @@ def cli() -> None:
     click.echo(f"Your photos will available in folder {path}")
 
     for media_item in media_items:
-        filename_path = os.path.join(path, media_item.filename)
+        filename_path: str = os.path.join(path, media_item.filename)
         try:
-            if media_item.product_url.lower().startswith("http"):
-                request = Request(media_item.product_url)
-                with urlopen(request) as in_stream, open(  # nosec
-                    filename_path,
-                    "wb",
-                ) as out_file:
-                    copyfileobj(in_stream, out_file)
-            else:
-                click.echo(f"Invalid URL: {media_item.product_url}")
-
+            media_item_url: str = media_item.download_url()
+            request = Request(media_item_url)
+            with urlopen(request) as in_stream, open(  # nosec
+                filename_path,
+                "wb",
+            ) as out_file:
+                copyfileobj(in_stream, out_file)
         except Exception as e:
-            click.echo(f"Error downloading {media_item.product_url}. {e}")
+            click.echo(f"Error downloading {media_item.base_url}. {e}")

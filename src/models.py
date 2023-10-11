@@ -20,8 +20,18 @@ class GoogleAlbums(BaseModel):
 class GoogleMediaItem(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
-    product_url: str = Field(alias="productUrl")
+    base_url: str = Field(alias="baseUrl")
     filename: str
+    mime_type: str = Field(alias="mimeType")
+
+    def download_url(self) -> str:
+        if not self.base_url.lower().startswith("http"):
+            raise ValueError("Expected an http base_url")
+        if self.mime_type.startswith("image"):
+            return f"{self.base_url}=d"
+        if self.mime_type.startswith("video"):
+            return f"{self.base_url}=dv"
+        raise ValueError("Unknown mime type")
 
 
 class GoogleMediaItems(BaseModel):

@@ -25,7 +25,7 @@ def test_cli_no_albums(mock_get_albums):
 def test_cli():
     runner = CliRunner()
     result = runner.invoke(cli, input="1")
-
+    breakpoint()
     assert not result.exception
     assert "1: " in result.output
     assert "2: " in result.output
@@ -62,9 +62,9 @@ def test_cli_exception_download(mock_url_open):
 @patch("src.cli.DEFAULT_DOWNLOAD_PATH", "/tmp")
 @patch("src.cli.MOCK_GOOGLE_PHOTOS_LIBRARY", True)
 @patch("src.cli.GooglePhotos.get_media_items_by_album_id")
-def test_cli_product_url_not_http(mock_get_media_items):
+def test_cli_base_url_not_http(mock_get_media_items):
     google_media_items = get_google_media_items(media_items_size=1)
-    google_media_items.media_items[0].product_url = "invalid_url"
+    google_media_items.media_items[0].base_url = "invalid_url"
     mock_get_media_items.return_value = google_media_items.media_items
 
     runner = CliRunner()
@@ -80,7 +80,7 @@ def test_cli_product_url_not_http(mock_get_media_items):
     assert "Enter id of the album to download. 0 to exit: " in result.output
     assert "Downloading album" in result.output
     assert "Your photos will available in folder" in result.output
-    assert "Invalid URL" in result.output
+    assert "Error downloading" in result.output
 
 
 @patch("src.cli.MOCK_GOOGLE_PHOTOS_LIBRARY", True)
