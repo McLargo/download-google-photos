@@ -91,10 +91,10 @@ def test_google_media_item_download_url_mime_type_invalid() -> None:
     media_item = GoogleMediaItem(
         base_url="http://media_item_base_url",
         filename="media_item_filename",
-        mime_type="invalid",
+        mime_type="model/example",
     )
-    with pytest.raises(ValueError, match="Unknown mime type"):
-        media_item.download_url()
+
+    assert media_item.download_url() == "http://media_item_base_url"
 
 
 def test_google_media_item_model_by_alias() -> None:

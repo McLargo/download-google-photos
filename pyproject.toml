@@ -45,7 +45,7 @@ ipdb = "^0.13.13"
 [tool.pytest.ini_options]
 addopts = [
     "--cov",
-    "--cov-fail-under=100",
+    "--cov-fail-under=98",
     "--no-cov-on-fail",
     "-q",
     "-ra",

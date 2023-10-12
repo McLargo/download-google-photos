@@ -31,7 +31,7 @@ class GoogleMediaItem(BaseModel):
             return f"{self.base_url}=d"
         if self.mime_type.startswith("video"):
             return f"{self.base_url}=dv"
-        raise ValueError("Unknown mime type")
+        return self.base_url
 
 
 class GoogleMediaItems(BaseModel):

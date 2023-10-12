@@ -25,7 +25,7 @@ def test_cli_no_albums(mock_get_albums):
 def test_cli():
     runner = CliRunner()
     result = runner.invoke(cli, input="1")
-    breakpoint()
+
     assert not result.exception
     assert "1: " in result.output
     assert "2: " in result.output

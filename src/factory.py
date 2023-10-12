@@ -36,11 +36,13 @@ class GoogleAlbumsFactory(ModelFactory[GoogleAlbums]):
 class GoogleMediaItemFactory(EsESFaker, ModelFactory[GoogleMediaItem]):
     __model__ = GoogleMediaItem
 
-    mime_type: str = "image/jpeg"
-
     @classmethod
     def base_url(cls) -> str:
         return cls.__faker__.image_url()
+
+    @classmethod
+    def mime_type(cls) -> str:
+        return cls.__faker__.mime_type()
 
 
 class GoogleMediaItemsFactory(ModelFactory[GoogleMediaItems]):
