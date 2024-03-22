@@ -11,7 +11,12 @@ they can be skipped.
 
 ## Requirements
 
-TDB what is needed to connect to google photos api.
+- Download credential json file from Google Cloud Platform (Credentials -> ID de
+  clientes OAuth 2.0) and save it in the oauth folder.
+- Create a config.py file in the src folder with the following variables:
+  - DEFAULT_DOWNLOAD_PATH: str, path to download images
+  - MOCK_PHOTOS_LIBRARY: bool, True to mock google photos library, False to use
+    google photos library.
 
 ## Description
 
