@@ -10,7 +10,7 @@ pytestmark = pytest.mark.functional
 
 
 @patch("src.cli.MOCK_GOOGLE_PHOTOS_LIBRARY", True)
-@patch("src.cli.GooglePhotos.get_albums")
+@patch("src.cli.GooglePhotosClient.get_albums")
 def test_cli_no_albums(mock_get_albums):
     mock_get_albums.return_value = []
     runner = CliRunner()
@@ -61,7 +61,7 @@ def test_cli_exception_download(mock_url_open):
 
 @patch("src.cli.DEFAULT_DOWNLOAD_PATH", "/tmp")
 @patch("src.cli.MOCK_GOOGLE_PHOTOS_LIBRARY", True)
-@patch("src.cli.GooglePhotos.get_media_items_by_album_id")
+@patch("src.cli.GooglePhotosClient.get_media_items_by_album_id")
 def test_cli_base_url_not_http(mock_get_media_items):
     google_media_items = get_google_media_items(media_items_size=1)
     google_media_items.media_items[0].base_url = "invalid_url"

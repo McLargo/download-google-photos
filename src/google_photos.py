@@ -12,7 +12,7 @@ from src.models import (
 )
 
 
-class GooglePhotos:
+class GooglePhotosClient:
     SCOPES = [
         "https://www.googleapis.com/auth/photoslibrary",
         "https://www.googleapis.com/auth/photoslibrary.readonly",
@@ -63,8 +63,12 @@ class GooglePhotos:
                 )
                 .execute()
             )
+            if not google_albums:
+                break
+
             google_albums_model: GoogleAlbums = GoogleAlbums(**google_albums)
             albums.extend(google_albums_model.albums)
+
             if not google_albums_model.next_page_token:
                 break
             page_token = google_albums_model.next_page_token
@@ -75,14 +79,25 @@ class GooglePhotos:
         self,
         album_id: str,
     ) -> list[GoogleMediaItem]:
-        media_items = (
-            self._photos_library.mediaItems()
-            .search(
-                body={
-                    "albumId": album_id,
-                },
+        media_items: list[GoogleMediaItem] = []
+        page_token = None
+        while True:
+            google_media_items = (
+                self._photos_library.mediaItems()
+                .search(
+                    body={
+                        "albumId": album_id,
+                        "pageToken": page_token,
+                    },
+                )
+                .execute()
             )
-            .execute()
-        )
-        media_items_model: GoogleMediaItems = GoogleMediaItems(**media_items)
-        return media_items_model.media_items
+            if not google_media_items:
+                break
+            media_items_model: GoogleMediaItems = GoogleMediaItems(**google_media_items)
+            media_items.extend(media_items_model.media_items)
+            if not media_items_model.next_page_token:
+                break
+            page_token = media_items_model.next_page_token
+
+        return media_items

@@ -38,3 +38,4 @@ class GoogleMediaItems(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     media_items: list[GoogleMediaItem] = Field(alias="mediaItems")
+    next_page_token: Optional[str] = Field(default=None, alias="nextPageToken")
