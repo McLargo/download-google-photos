@@ -86,9 +86,9 @@ Unit testing and functional testing are available.
 Secrets and variables are stored in `src/config.py` file. This file is not
 included in the repository.
 
-- DEFAULT_DOWNLOAD_PATH: str, path to download images
-- MOCK_PHOTOS_LIBRARY: bool, True to mock google photos library, False to use
-  google photos library.
+- DEFAULT_DOWNLOAD_PATH(str): path to download images.
+- MOCK_PHOTOS_LIBRARY(bool): True to mock google photos library in debug mode.
+  False to use google photos library.
 
-Oauth file tokens are in oauth folder. This folder is not included in the
-repository.
+Oauth file tokens are in oauth folder. Get your owns from google.
+token/credentials files must not be included in the repository.

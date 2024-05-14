@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 
 # google Oauth
-oauth/
+oauth/*.json
 
 # config
 **/config.py
